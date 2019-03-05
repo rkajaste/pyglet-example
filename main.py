@@ -9,18 +9,23 @@ class Game(pyglet.window.Window):
     def __init__(self):
         super(Game, self).__init__(width=800, height=600, fullscreen=False)
         pyglet.clock.schedule_interval(self.update, 1 / 120.0)
-        self.player = Player(100, 100)
-        self.enemy = Enemy(600, 100, is_patrolling=True)
+        self.enemies = [
+            Enemy(600, 100, is_patrolling=True),
+            Enemy(600, 100)
+        ]
+        self.player = Player(100, 100, self.enemies)
 
     def update(self, dt):
         self.push_handlers(keys)
-        self.player.update(dt)
-        self.enemy.update(dt)
+        self.player.updateAll(dt)
+        for enemy in self.enemies:
+            enemy.update(dt)
 
     def on_draw(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        self.player.draw()
-        self.enemy.draw()
+        self.player.drawAll()
+        for enemy in self.enemies:
+            enemy.draw()
         
 if __name__ == '__main__':
     game = Game()
