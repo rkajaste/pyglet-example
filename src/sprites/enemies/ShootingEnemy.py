@@ -10,13 +10,17 @@ class ShootingEnemy(Enemy):
           properties={'firing_cooldown': 20},
           is_patrolling=False,
           targets=[]):
-        super(ShootingEnemy, self).__init__(x, y, image)
-        self.timer = 0
-        self.last_fire = 0
+        super(ShootingEnemy, self).__init__(x, y, 
+                                            image, 
+                                            is_patrolling=is_patrolling)
+        self.targets=targets
         self.created_objects['bullets'] = []
         self.properties.update(properties)
+        self.timer = 0
+        self.last_fire = 0
 
     def update(self, dt):
+        super().update(dt)
         self.timer += 1
         if not has_cooldown(self.timer,\
                         self.last_fire,\
@@ -33,5 +37,5 @@ class ShootingEnemy(Enemy):
             image=bullet_image,
             direction=self.direction,
             bullets=self.created_objects['bullets'],
-            targets=self.enemies
+            targets=self.targets
         )

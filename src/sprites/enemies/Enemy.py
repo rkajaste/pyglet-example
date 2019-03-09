@@ -30,14 +30,14 @@ class Enemy(pyglet.sprite.Sprite):
     
     def updateAll(self, dt):
         self.update(dt)
-        for objects in self.created_objects:
-            for obj in objects:
+        for key in self.created_objects:
+            for obj in self.created_objects[key]:
                 obj.update(dt)
 
     def drawAll(self):
         self.draw()
-        for objects in self.created_objects:
-            for obj in objects:
+        for key in self.created_objects:
+            for obj in self.created_objects[key]:
                 obj.draw()
 
     def move(self):
