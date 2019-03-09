@@ -3,6 +3,7 @@ import pyglet
 from pyglet.gl import *
 from src.sprites.player.Player import Player
 from src.sprites.enemies.Enemy import Enemy
+from src.sprites.enemies.ShootingEnemy import ShootingEnemy
 from config import key, keys
 
 class Game(pyglet.window.Window):
@@ -11,10 +12,9 @@ class Game(pyglet.window.Window):
         pyglet.clock.schedule_interval(self.update, 1 / 120.0)
         self.enemies = [
             Enemy(600, 100, is_patrolling=True),
-            Enemy(600, 100)
+            ShootingEnemy(600, 100, targets=[self.player])
         ]
         self.player = Player(100, 100, self.enemies)
-
     def update(self, dt):
         self.push_handlers(keys)
         self.player.updateAll(dt)
