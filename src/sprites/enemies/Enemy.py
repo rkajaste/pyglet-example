@@ -49,8 +49,6 @@ class Enemy(pyglet.sprite.Sprite):
 
     def get_hit(self, damage):
         self.health -= damage
-        if self.health <= 0:
-            self.die()
 
     def die (self):
-        self.kill()
+        self.delete()

@@ -37,6 +37,6 @@ class ShootingEnemy(Enemy):
             image=bullet_image,
             direction=self.direction,
             bullets=self.created_objects['bullets'],
-            targets=self.enemies,
+            targets=self.targets,
             damage=self.properties['damage']
         )

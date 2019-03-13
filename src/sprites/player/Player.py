@@ -13,10 +13,11 @@ class Player(pyglet.sprite.Sprite):
             'speed': 8,
             'jumping_power': 40,
             'firing_cooldown': 20,
-            'max_health': 3
+            'max_health': 3,
+            'damage': 1
         }
         self.health = self.properties['max_health']
-        self.enemies = enemies
+        self.targets = targets
         self.bullets = []
         self.direction = 1
         self.last_fire = 0
@@ -73,13 +74,19 @@ class Player(pyglet.sprite.Sprite):
             image=bullet_image,
             direction=self.direction,
             bullets=self.bullets,
-            targets=self.enemies
+            targets=self.targets,
+            damage=self.properties['damage']
         )
 
-    def get_hit (self):
-        self.health -= 1
-        if self.health <= 0:
-            self.kill()
+    def get_hit (self, damage):
+        self.health -= damage
 
     def die (self):
-        self.kill()
+        self.respawn(100, 100)
+    
+    def respawn(self, x, y):
+        self.x, self.y = x, y
+        self.health = self.properties['max_health']
+        self.timer = 0
+        self.last_fire = 0
+        

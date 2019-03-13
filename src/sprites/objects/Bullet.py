@@ -24,8 +24,14 @@ class Bullet(pyglet.sprite.Sprite):
         self.x += self.properties['speed'] * self.direction
 
     def collides(self):
+        from src.sprites.player.Player import Player
+
         for target in self.targets:
             if detect_collision(self, target):
-                target.get_hit(self.properties['damage'])
+                target.get_hit(self.damage)
+                if target.health <= 0:
+                    if not isinstance(target, Player):
+                        self.targets.remove(target)
+                    target.die()
                 return True
         return False
