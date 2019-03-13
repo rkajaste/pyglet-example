@@ -12,8 +12,10 @@ class Player(pyglet.sprite.Sprite):
         self.properties = {
             'speed': 8,
             'jumping_power': 40,
-            'firing_cooldown': 20
+            'firing_cooldown': 20,
+            'max_health': 3
         }
+        self.health = self.properties['max_health']
         self.enemies = enemies
         self.bullets = []
         self.direction = 1
@@ -73,3 +75,11 @@ class Player(pyglet.sprite.Sprite):
             bullets=self.bullets,
             targets=self.enemies
         )
+
+    def get_hit (self):
+        self.health -= 1
+        if self.health <= 0:
+            self.kill()
+
+    def die (self):
+        self.kill()

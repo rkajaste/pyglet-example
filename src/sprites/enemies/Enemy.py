@@ -11,8 +11,11 @@ class Enemy(pyglet.sprite.Sprite):
         'is_patrolling': is_patrolling
       }
       self.properties = {
-        'speed': 8
+        'speed': 8,
+        'max_health': 3,
+        'damage': 1
       }
+      self.health = self.properties['max_health']
       self.created_objects = {}
       self.direction = -1
       self.old_x, self.old_y = self.x, self.y
@@ -43,3 +46,11 @@ class Enemy(pyglet.sprite.Sprite):
     def move(self):
         speed = self.properties['speed']
         self.x += speed * self.direction
+
+    def get_hit(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            self.die()
+
+    def die (self):
+        self.kill()
