@@ -2,3 +2,6 @@ Scripts/
 pip-selfcheck.json
 __pycache__
 settings.json
+tcl/
+Lib/
+Include/

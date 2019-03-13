@@ -6,7 +6,7 @@ from src.timings import has_cooldown
 from src.sprites.objects.Bullet import Bullet
 
 class Player(pyglet.sprite.Sprite):
-    def __init__(self, x, y, enemies,
+    def __init__(self, x, y, targets,
             image=pyglet.resource.image('resources/player/player.png')):
         super(Player, self).__init__(x=x, y=y, img=image)
         self.properties = {
