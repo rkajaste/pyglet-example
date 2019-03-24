@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="80" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="37">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="3" columns="3">
+  <image source="tileset.png" trans="ffffff" width="96" height="32"/>
+ </tileset>
+ <layer id="3" name="platforms" width="80" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt1cEKgCAMAFCt///nLh1CFoklaL4Hu6iojE1TAgAAAAAAAJjXHgQwP71Nb2oMxhX1px5lJOoT/iufUTseufvHVngrvsjfykbN3/YwVs5H669y52g9r0bLPd7kL9r3AEtHALI=
+  </data>
+ </layer>
+ <objectgroup color="#ff7800" id="6" name="platforms">
+  <properties>
+   <property name="collision" value="t"/>
+  </properties>
+  <object id="1" name="platform" type="platform" x="1.33333" y="1248" width="702.667" height="30.6667">
+   <properties>
+    <property name="collision" value="t"/>
+   </properties>
+  </object>
+  <object id="3" name="platform" type="platform" x="959.333" y="1247.33" width="254.667" height="30.6667">
+   <properties>
+    <property name="collision" value="tr"/>
+   </properties>
+  </object>
+  <object id="4" name="platform" type="platform" x="1502" y="1247.33" width="352" height="30.6667">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="5" name="platform" type="platform" x="704" y="1149.33" width="65.3333" height="129.333">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="6" name="platform" type="platform" x="894" y="1148.67" width="65.3333" height="129.333">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="7" name="platform" type="platform" x="1249.33" y="1153.33" width="222.667" height="30.6667">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="10" name="platform" type="platform" x="1919.33" y="1214" width="33.3333" height="63.9997">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="11" name="platform" type="platform" x="2080.67" y="1216" width="33.3333" height="63.9997">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="12" name="platform" type="platform" x="2174" y="1216" width="33.3333" height="63.9997">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="13" name="platform" type="platform" x="2303.33" y="1214.67" width="33.3333" height="63.9997">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="14" name="platform" type="platform" x="2397.33" y="1244.67" width="162.667" height="33.3334">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="15" name="platform" type="platform" x="447.879" y="1056.36" width="158.667" height="30.6667">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="16" name="platform" type="platform" x="159.667" y="991.667" width="192.667" height="30.6667">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="17" name="platform" type="platform" x="416.667" y="895.667" width="158.667" height="30.6667">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="18" name="platform" type="platform" x="641.667" y="831.667" width="158.667" height="30.6667">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+  <object id="19" name="platform" type="platform" x="416.667" y="737.667" width="158.667" height="30.6667">
+   <properties>
+    <property name="collision" value="tlr"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="walls">
+  <object id="20" name="wall_left" type="wall" x="-63.6364" y="-12.1212" width="60.6061" height="1290.91">
+   <properties>
+    <property name="collision" value="r"/>
+   </properties>
+  </object>
+  <object id="23" name="wall_right" type="wall" x="2560.61" y="-12.1217" width="60.6061" height="1290.91">
+   <properties>
+    <property name="collision" value="l"/>
+   </properties>
+  </object>
+  <object id="25" name="wall_bottom" type="death" x="-66.6667" y="1281.82" width="2690.91" height="72.7282">
+   <properties>
+    <property name="collision" value="t"/>
+   </properties>
+  </object>
+  <object id="26" name="wall_top" type="wall" x="-66.6671" y="-78.7883" width="2690.91" height="72.7282">
+   <properties>
+    <property name="collision" value="b"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ff0000" id="9" name="enemies">
+  <object id="28" name="enemy" x="480.424" y="1108.91" width="32" height="128">
+   <properties>
+    <property name="patrolling" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="29" name="enemy" x="1054.67" y="1102.67" width="32" height="128"/>
+  <object id="30" name="enemy" type="shooting" x="1657.33" y="1112" width="32" height="128">
+   <properties>
+    <property name="patrolling" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="31" name="enemy" x="239" y="856" width="32" height="128"/>
+  <object id="32" name="enemy" type="shooting" x="708" y="697" width="32" height="128"/>
+ </objectgroup>
+ <objectgroup color="#00ff00" id="11" name="blockers">
+  <object id="33" name="blocker" type="reverse" x="1485.91" y="1038.36" width="17.303" height="209.091">
+   <properties>
+    <property name="collision" value="r"/>
+   </properties>
+  </object>
+  <object id="34" name="blocker" type="reverse" x="1849.85" y="1035.45" width="15.303" height="209.091">
+   <properties>
+    <property name="collision" value="l"/>
+   </properties>
+  </object>
+  <object id="35" name="blocker" type="reverse" x="342.379" y="1036.91" width="17.303" height="209.091">
+   <properties>
+    <property name="collision" value="r"/>
+   </properties>
+  </object>
+  <object id="36" name="blocker" type="reverse" x="706.318" y="1034" width="15.303" height="209.091">
+   <properties>
+    <property name="collision" value="l"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#0000ff" id="10" name="player">
+  <object id="27" name="player" x="30.6667" y="1108.67" width="32" height="128"/>
+ </objectgroup>
+</map>
