@@ -18,6 +18,9 @@ class Level:
         self.platform_layer = pyglet.graphics.OrderedGroup(0)
         self.sprite_layer = pyglet.graphics.OrderedGroup(1)
         self.texture_atlas = pyglet.image.atlas.TextureAtlas(width=128, height=32)
+        self.player = None
+        self.enemies = []
+        self.enemy_targets = []
         self.load_map()
 
     def load_map(self):
@@ -54,9 +57,39 @@ class Level:
                     self.tilemap_batch.add(4, GL_QUADS, self.platform_layer,
                                             ('v2f/static', vertex_positions),
                                             ('t3f/static', texture_gid_dict[gid]))
-    def update(self, dt):
-        pass
+        for group in self.tilemap.visible_object_groups:
+            for obj in self.tilemap.layers[group]:
+                if obj.name == "player":
+                    self.player = Player(
+                        obj.x, int(self.height - obj.y - obj.height), 
+                        targets=self.enemies, 
+                        batch=self.tilemap_batch, 
+                        group=self.sprite_layer
+                    )
+                    self.enemy_targets.append(self.player)
+                elif obj.name == "enemy":
+                    if obj.type == "shooting":
+                        enemy = ShootingEnemy(
+                            obj.x, int(self.height - obj.y - obj.height), 
+                            targets=self.enemy_targets,
+                            batch=self.tilemap_batch,
+                            is_patrolling=obj.properties.get('patrolling'),
+                            group=self.sprite_layer
+                        )
+                    else:
+                        enemy = Enemy(
+                            obj.x, int(self.height - obj.y - obj.height),
+                            is_patrolling=obj.properties.get('patrolling'),
+                            batch=self.tilemap_batch,
+                            group=self.sprite_layer
+                        )
+                    self.enemies.append(enemy)
 
+    def update(self, dt):
+        self.player.updateAll(dt)
+        for enemy in self.enemies:
+            enemy.updateAll(dt)
+        
     def draw(self):
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -66,8 +99,3 @@ class Level:
         glDisable(GL_TEXTURE_2D)
         glDisable(GL_BLEND)
 
-""" 
-416 736 <ImageDataRegion 32x32>
-448 736 <ImageDataRegion 32x32>
-...
-"""

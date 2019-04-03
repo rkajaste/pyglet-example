@@ -3,8 +3,8 @@ import pyglet
 from src.physics import detect_world_bounds, detect_collision
 
 class Bullet(pyglet.sprite.Sprite):
-    def __init__(self, x, y, image, direction, bullets, targets, damage):
-        super(Bullet, self).__init__(x=x, y=y, img=image)
+    def __init__(self, x, y, image, direction, bullets, targets, damage, batch=None, group=None):
+        super(Bullet, self).__init__(x=x, y=y, img=image, batch=batch, group=group)
         self.direction = direction
         self.bullets = bullets
         self.targets = targets

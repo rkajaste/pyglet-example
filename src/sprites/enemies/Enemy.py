@@ -4,9 +4,11 @@ from src.physics import calculate_gravity, detect_world_bounds, detect_floor
 
 class Enemy(pyglet.sprite.Sprite):
     def __init__(self, x, y,
-          image=pyglet.resource.image('resources/enemies/enemy_red.png'),
-          is_patrolling=False):
-      super(Enemy, self).__init__(x=x, y=y, img=image)
+            image=pyglet.resource.image('resources/enemies/enemy_red.png'),
+            is_patrolling=False,
+            batch=None,
+            group=None):
+      super(Enemy, self).__init__(x=x, y=y, img=image, batch=batch, group=group)
       self.states = {
         'is_patrolling': is_patrolling
       }

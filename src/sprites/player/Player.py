@@ -6,9 +6,15 @@ from src.timings import has_cooldown
 from src.sprites.objects.Bullet import Bullet
 
 class Player(pyglet.sprite.Sprite):
-    def __init__(self, x, y, targets,
-            image=pyglet.resource.image('resources/player/player.png')):
-        super(Player, self).__init__(x=x, y=y, img=image)
+    def __init__(self, 
+            x, y, 
+            targets,
+            image=pyglet.resource.image('resources/player/player.png'),
+            batch=None, 
+            group=None):
+        super(Player, self).__init__(x=x, y=y, img=image, batch=batch, group=group)
+        self.batch = batch
+        self.group = group
         self.properties = {
             'speed': 8,
             'jumping_power': 40,
@@ -75,7 +81,9 @@ class Player(pyglet.sprite.Sprite):
             direction=self.direction,
             bullets=self.bullets,
             targets=self.targets,
-            damage=self.properties['damage']
+            damage=self.properties['damage'],
+            batch=self.batch,
+            group=self.group
         )
 
     def get_hit (self, damage):

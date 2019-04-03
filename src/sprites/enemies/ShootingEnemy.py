@@ -6,14 +6,20 @@ from src.timings import has_cooldown
 
 class ShootingEnemy(Enemy):
     def __init__(self, x, y,
-          image=pyglet.resource.image('resources/enemies/enemy_red.png'),
-          properties={'firing_cooldown': 20},
-          is_patrolling=False,
-          targets=[]):
+            image=pyglet.resource.image('resources/enemies/enemy_red.png'),
+            properties={'firing_cooldown': 20},
+            is_patrolling=False,
+            targets=[],
+            batch=None, 
+            group=None):
         super(ShootingEnemy, self).__init__(x, y, 
-                                            image, 
-                                            is_patrolling=is_patrolling)
-        self.targets=targets
+                                            image=image,
+                                            is_patrolling=is_patrolling,
+                                            batch=batch,
+                                            group=group)
+        self.batch = batch
+        self.group = group
+        self.targets = targets
         self.created_objects['bullets'] = []
         self.properties.update(properties)
         self.timer = 0
@@ -38,5 +44,7 @@ class ShootingEnemy(Enemy):
             direction=self.direction,
             bullets=self.created_objects['bullets'],
             targets=self.targets,
-            damage=self.properties['damage']
+            damage=self.properties['damage'],
+            batch=self.batch,
+            group=self.group
         )
