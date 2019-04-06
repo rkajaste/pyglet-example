@@ -121,7 +121,11 @@
     <property name="patrolling" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="29" name="enemy" x="1054.67" y="1102.67" width="32" height="128"/>
+  <object id="29" name="enemy" x="1054.67" y="1102.67" width="32" height="128">
+   <properties>
+    <property name="patrolling" type="bool" value="false"/>
+   </properties>
+  </object>
   <object id="30" name="enemy" type="shooting" x="1657.33" y="1112" width="32" height="128">
    <properties>
     <property name="patrolling" type="bool" value="true"/>
@@ -131,12 +135,12 @@
   <object id="32" name="enemy" type="shooting" x="708" y="697" width="32" height="128"/>
  </objectgroup>
  <objectgroup color="#00ff00" id="11" name="blockers">
-  <object id="33" name="blocker" type="reverse" x="1485.91" y="1038.36" width="17.303" height="209.091">
+  <object id="33" name="blocker" type="reverse" x="1495" y="1038.36" width="17.303" height="209.091">
    <properties>
     <property name="collision" value="r"/>
    </properties>
   </object>
-  <object id="34" name="blocker" type="reverse" x="1849.85" y="1035.45" width="15.303" height="209.091">
+  <object id="34" name="blocker" type="reverse" x="1843.79" y="1035.45" width="15.303" height="209.091">
    <properties>
     <property name="collision" value="l"/>
    </properties>

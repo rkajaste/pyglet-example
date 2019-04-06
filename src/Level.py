@@ -7,12 +7,16 @@ from pytmx.util_pyglet import load_pyglet
 from src.sprites.player.Player import Player
 from src.sprites.enemies.Enemy import Enemy
 from src.sprites.enemies.ShootingEnemy import ShootingEnemy
+from src.physics import detect_platform_collision, detect_world_bounds, detect_blockers
 
 class Level:
     def __init__(self):
         path = os.path.abspath("resources/tilemaps/level.tmx")
         self.tilemap = load_pyglet(path)
         self.height = self.tilemap.height * self.tilemap.tileheight
+        self.platforms = self.tilemap.get_layer_by_name('platforms')
+        self.walls = self.tilemap.get_layer_by_name('walls')
+        self.blockers = self.tilemap.get_layer_by_name('blockers')
         self.tilemap_batch = pyglet.graphics.Batch()
         self.sprite_batch = pyglet.graphics.Batch()
         self.platform_layer = pyglet.graphics.OrderedGroup(0)
@@ -59,9 +63,10 @@ class Level:
                                             ('t3f/static', texture_gid_dict[gid]))
         for group in self.tilemap.visible_object_groups:
             for obj in self.tilemap.layers[group]:
+                obj.y = int(self.height - obj.y - obj.height)
                 if obj.name == "player":
                     self.player = Player(
-                        obj.x, int(self.height - obj.y - obj.height), 
+                        obj.x, obj.y, 
                         targets=self.enemies, 
                         batch=self.tilemap_batch, 
                         group=self.sprite_layer
@@ -70,7 +75,7 @@ class Level:
                 elif obj.name == "enemy":
                     if obj.type == "shooting":
                         enemy = ShootingEnemy(
-                            obj.x, int(self.height - obj.y - obj.height), 
+                            obj.x, obj.y, 
                             targets=self.enemy_targets,
                             batch=self.tilemap_batch,
                             is_patrolling=obj.properties.get('patrolling'),
@@ -78,7 +83,7 @@ class Level:
                         )
                     else:
                         enemy = Enemy(
-                            obj.x, int(self.height - obj.y - obj.height),
+                            obj.x, obj.y,
                             is_patrolling=obj.properties.get('patrolling'),
                             batch=self.tilemap_batch,
                             group=self.sprite_layer
@@ -87,9 +92,14 @@ class Level:
 
     def update(self, dt):
         self.player.updateAll(dt)
+        detect_platform_collision(self.platforms, self.player)
+        detect_world_bounds(self.walls, self.player)
         for enemy in self.enemies:
             enemy.updateAll(dt)
-        
+            detect_platform_collision(self.platforms, enemy)
+            detect_blockers(self.blockers, enemy)
+            detect_world_bounds(self.walls, enemy, enemies=self.enemies)
+
     def draw(self):
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)

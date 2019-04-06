@@ -16,7 +16,7 @@ class Bullet(pyglet.sprite.Sprite):
 
     def update(self, dt):
         self.move()
-        if detect_world_bounds(self) or self.collides():
+        if self.collides():
             self.bullets.remove(self)
             self.delete()
 

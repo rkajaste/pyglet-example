@@ -1,7 +1,7 @@
 # ./src/sprites/player/Player.py
 import pyglet
 from config import key, keys
-from src.physics import calculate_gravity, detect_world_bounds, detect_floor
+from src.physics import calculate_gravity
 from src.timings import has_cooldown
 from src.sprites.objects.Bullet import Bullet
 
@@ -48,11 +48,6 @@ class Player(pyglet.sprite.Sprite):
             self.last_fire = 0
             self.fire()
         self.y = calculate_gravity(self.y)
-        if detect_floor(self.y):
-            self.y = self.old_y
-        if detect_world_bounds(self):
-            self.x = self.old_x
-        self.old_x, self.old_y = self.x, self.y
 
     def updateAll(self, dt):
         self.update(dt)
@@ -94,7 +89,7 @@ class Player(pyglet.sprite.Sprite):
     
     def respawn(self, x, y):
         self.x, self.y = x, y
-        self.health = self.properties['max_health']
+        if self.health <= 0:
+            self.health = self.properties['max_health']
         self.timer = 0
-        self.last_fire = 0
-        
+        self.last_fire = 0   

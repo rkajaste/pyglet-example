@@ -1,6 +1,6 @@
 # src/sprites/enemies/Enemy.py
 import pyglet
-from src.physics import calculate_gravity, detect_world_bounds, detect_floor
+from src.physics import calculate_gravity
 
 class Enemy(pyglet.sprite.Sprite):
     def __init__(self, x, y,
@@ -26,12 +26,6 @@ class Enemy(pyglet.sprite.Sprite):
         if self.states['is_patrolling']:
             self.move()
         self.y = calculate_gravity(self.y)
-        if detect_floor(self.y):
-            self.y = self.old_y
-        if detect_world_bounds(self):
-            self.direction *= -1
-            self.x = self.old_x
-        self.old_x, self.old_y = self.x, self.y
     
     def updateAll(self, dt):
         self.update(dt)

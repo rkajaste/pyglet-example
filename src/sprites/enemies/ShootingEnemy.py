@@ -48,3 +48,7 @@ class ShootingEnemy(Enemy):
             batch=self.batch,
             group=self.group
         )
+
+    def die(self):
+        self.created_objects['bullets'].clear()
+        self.delete()
