@@ -17,21 +17,32 @@ class Player(pyglet.sprite.Sprite):
         self.group = group
         self.properties = {
             'speed': 8,
-            'jumping_power': 40,
+            'jumping_power': 20,
             'firing_cooldown': 20,
             'max_health': 3,
             'damage': 1
+        }
+        self.states = {
+            'grounded': False
         }
         self.health = self.properties['max_health']
         self.targets = targets
         self.bullets = []
         self.direction = 1
         self.last_fire = 0
+        self.last_gravity_check = 0
+        self.change_y = 0
         self.timer = 0
         self.old_x, self.old_y = self.x, self.y
 
     def update(self, dt):
         self.timer += 1
+        
+        if self.timer - self.last_gravity_check >= 5:
+            self.last_gravity_check = self.timer
+            self.change_y = calculate_gravity(self.change_y)
+        self.y += self.change_y
+
         if keys[key.LEFT] or keys[key.RIGHT]:
             if keys[key.LEFT] and self.direction == 1:
                 self.direction *= -1
@@ -40,14 +51,16 @@ class Player(pyglet.sprite.Sprite):
             self.move()
         if keys[key.UP]:
             self.jump()
-        if keys[key.SPACE] and not\
-        has_cooldown(self.timer,\
-                    self.last_fire,\
-                    self.properties['firing_cooldown']):
-            self.timer = 0
-            self.last_fire = 0
+        if (
+            keys[key.SPACE] and not
+            has_cooldown(
+                self.timer,
+                self.last_fire,
+                self.properties['firing_cooldown']
+            )
+        ):
+            self.last_fire = self.timer
             self.fire()
-        self.y = calculate_gravity(self.y)
 
     def updateAll(self, dt):
         self.update(dt)
@@ -60,8 +73,8 @@ class Player(pyglet.sprite.Sprite):
             bullet.draw()
 
     def jump(self):
-        jumping_power = self.properties['jumping_power']
-        self.y += jumping_power
+        if self.states['grounded']:
+            self.change_y = self.properties['jumping_power']
 
     def move(self):
         speed = self.properties['speed']
@@ -92,4 +105,5 @@ class Player(pyglet.sprite.Sprite):
         if self.health <= 0:
             self.health = self.properties['max_health']
         self.timer = 0
+        self.last_gravity_check = 0
         self.last_fire = 0   

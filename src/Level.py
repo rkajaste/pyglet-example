@@ -7,7 +7,9 @@ from pytmx.util_pyglet import load_pyglet
 from src.sprites.player.Player import Player
 from src.sprites.enemies.Enemy import Enemy
 from src.sprites.enemies.ShootingEnemy import ShootingEnemy
-from src.physics import detect_platform_collision, detect_world_bounds, detect_blockers
+from src.physics import detect_platform_collision
+from src.physics import detect_world_bounds
+from src.physics import detect_blockers
 
 class Level:
     def __init__(self):
@@ -108,4 +110,3 @@ class Level:
         self.tilemap_batch.draw()
         glDisable(GL_TEXTURE_2D)
         glDisable(GL_BLEND)
-

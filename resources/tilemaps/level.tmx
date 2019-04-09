@@ -5,19 +5,19 @@
  </tileset>
  <layer id="3" name="platforms" width="80" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt1cEKgCAMAFCt///nLh1CFoklaL4Hu6iojE1TAgAAAAAAAJjXHgQwP71Nb2oMxhX1px5lJOoT/iufUTseufvHVngrvsjfykbN3/YwVs5H669y52g9r0bLPd7kL9r3AEtHALI=
+   eJzt1cEKgCAMAFCt///nLh0iFokljXwPdpmiMnSWAgAAAAAAAHxpDQJgdnojo7ljkFf0Pr1RMnE/4b/qHq35yNU/NkOveKN+M8tav+Umdx6P5h/VwdG7X4ueczypX7TuBl4HALI=
   </data>
  </layer>
  <objectgroup color="#ff7800" id="6" name="platforms">
   <properties>
    <property name="collision" value="t"/>
   </properties>
-  <object id="1" name="platform" type="platform" x="1.33333" y="1248" width="702.667" height="30.6667">
+  <object id="1" name="platform" type="platform" x="0" y="1248" width="704" height="32">
    <properties>
     <property name="collision" value="t"/>
    </properties>
   </object>
-  <object id="3" name="platform" type="platform" x="959.333" y="1247.33" width="254.667" height="30.6667">
+  <object id="3" name="platform" type="platform" x="960" y="1248" width="256" height="32">
    <properties>
     <property name="collision" value="tr"/>
    </properties>
@@ -27,12 +27,12 @@
     <property name="collision" value="tlr"/>
    </properties>
   </object>
-  <object id="5" name="platform" type="platform" x="704" y="1149.33" width="65.3333" height="129.333">
+  <object id="5" name="platform" type="platform" x="704" y="1152" width="64" height="128">
    <properties>
     <property name="collision" value="tlr"/>
    </properties>
   </object>
-  <object id="6" name="platform" type="platform" x="894" y="1148.67" width="65.3333" height="129.333">
+  <object id="6" name="platform" type="platform" x="894" y="1152" width="64" height="128">
    <properties>
     <property name="collision" value="tlr"/>
    </properties>
@@ -69,7 +69,7 @@
   </object>
   <object id="15" name="platform" type="platform" x="447.879" y="1056.36" width="158.667" height="30.6667">
    <properties>
-    <property name="collision" value="tlr"/>
+    <property name="collision" value="tlrb"/>
    </properties>
   </object>
   <object id="16" name="platform" type="platform" x="159.667" y="991.667" width="192.667" height="30.6667">
@@ -87,7 +87,7 @@
     <property name="collision" value="tlr"/>
    </properties>
   </object>
-  <object id="19" name="platform" type="platform" x="416.667" y="737.667" width="158.667" height="30.6667">
+  <object id="19" name="platform" type="platform" x="416.667" y="704.667" width="158.667" height="30.6667">
    <properties>
     <property name="collision" value="tlr"/>
    </properties>
@@ -126,11 +126,6 @@
     <property name="patrolling" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="30" name="enemy" type="shooting" x="1657.33" y="1112" width="32" height="128">
-   <properties>
-    <property name="patrolling" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="31" name="enemy" x="239" y="856" width="32" height="128"/>
   <object id="32" name="enemy" type="shooting" x="708" y="697" width="32" height="128"/>
  </objectgroup>
@@ -150,7 +145,7 @@
     <property name="collision" value="r"/>
    </properties>
   </object>
-  <object id="36" name="blocker" type="reverse" x="706.318" y="1034" width="15.303" height="209.091">
+  <object id="36" name="blocker" type="reverse" x="686.318" y="1038" width="15.303" height="209.091">
    <properties>
     <property name="collision" value="l"/>
    </properties>

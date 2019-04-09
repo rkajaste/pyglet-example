@@ -6,7 +6,7 @@ from src.Level import Level
 
 class Game(pyglet.window.Window):
     def __init__(self):
-        super(Game, self).__init__(fullscreen=True)
+        super(Game, self).__init__(width=800, height=600)
         pyglet.clock.schedule_interval(self.update, 1 / 60.0)
         self.level = Level()
     

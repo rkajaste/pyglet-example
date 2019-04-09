@@ -1,25 +1,48 @@
 #./src/physics.py
 
-gravity_strength = 5
-world_width = 800
-
 def detect_platform_collision(platforms, sprite):
+    sprite.states['grounded'] = False
     for platform in platforms:
         if detect_collision(platform, sprite):
             if 'collision' in platform.properties:
-                sides = platform.properties['collision']
-                if 'l' in sides and sprite.x + sprite.width >= platform.x:
-                    sprite.x = sprite.old_x
-                if 'r' in sides and sprite.x <= platform.x + platform.width:
-                    sprite.x = sprite.old_x
-                if 't' in sides and sprite.old_y >= platform.y + platform.height:
-                    sprite.y = platform.y + platform.height
-                if 'b' in sides:
-                    sprite.y = sprite.old_y
+                blocked_sides = platform.properties['collision']
+                check_left_right = True
+                platform_top = round(platform.y + platform.height)
+                platform_left = round(platform.x)
+                platform_bottom = round(platform.y)
+                platform_right = round(platform.x + platform.width)
+                
+                if ('t' in blocked_sides and 
+                    sprite.old_y >= platform_top):
+                        sprite.y = platform_top
+                        sprite.change_y = 0
+                        sprite.states['grounded'] = True
+                        check_left_right = False
 
-def calculate_gravity(current_y):
-    current_y -= gravity_strength
-    return current_y
+                if ('b' in blocked_sides and 
+                    sprite.y + sprite.height >= platform_bottom and
+                    sprite.old_y + sprite.height < platform_top):
+                        sprite.y = platform_bottom - sprite.height
+                        check_left_right = False
+
+                if check_left_right:
+                    if ('l' in blocked_sides and 
+                        sprite.x + sprite.width >= platform_left and
+                        sprite.x <= platform_left):
+                            sprite.x = platform_left - sprite.width
+                    if ('r' in blocked_sides and 
+                        sprite.x <= platform_right and
+                        sprite.x + sprite.width >= platform_right):
+                            sprite.x = platform_right
+
+def calculate_gravity(change_y):
+    if change_y == 0:
+        change_y = -1
+    else:
+        change_y -= 4
+    
+    return change_y
+
 
 def detect_world_bounds(walls, sprite, enemies=None):
     kill_sprite = False
@@ -28,7 +51,7 @@ def detect_world_bounds(walls, sprite, enemies=None):
             if wall.name == 'wall_left' or wall.name == 'wall_right':
                 sprite.x = sprite.old_x
             if wall.type == 'death' or wall.name == 'wall_bottom':
-                sprite.get_hit(1)    
+                sprite.get_hit(1)
                 kill_sprite = True
 
     sprite.old_x, sprite.old_y = sprite.x, sprite.y
@@ -42,9 +65,8 @@ def detect_blockers(blockers, sprite):
         if detect_collision(blocker, sprite):
             if 'collision' in blocker.properties:
                 sides = blocker.properties['collision']
-                if 'l' in sides and sprite.x + sprite.width >= blocker.x:
-                    sprite.direction *= -1
-                if 'r' in sides and sprite.x <= blocker.x + blocker.width:
+                if 'l' in sides and sprite.x + sprite.width >= blocker.x or \
+                    'r' in sides and sprite.x <= blocker.x + blocker.width:
                     sprite.direction *= -1
 
 def detect_collision(this, other):
