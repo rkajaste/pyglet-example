@@ -10,12 +10,16 @@ from src.sprites.enemies.ShootingEnemy import ShootingEnemy
 from src.physics import detect_platform_collision
 from src.physics import detect_world_bounds
 from src.physics import detect_blockers
+from src.Camera import Camera
+from config import SCREEN_WIDTH
+from config import SCREEN_HEIGHT
 
 class Level:
     def __init__(self):
         path = os.path.abspath("resources/tilemaps/level.tmx")
         self.tilemap = load_pyglet(path)
         self.height = self.tilemap.height * self.tilemap.tileheight
+        self.width = self.tilemap.width * self.tilemap.tilewidth
         self.platforms = self.tilemap.get_layer_by_name('platforms')
         self.walls = self.tilemap.get_layer_by_name('walls')
         self.blockers = self.tilemap.get_layer_by_name('blockers')
@@ -28,6 +32,7 @@ class Level:
         self.enemies = []
         self.enemy_targets = []
         self.load_map()
+        self.camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     def load_map(self):
         texture_gid_dict = {}
@@ -103,10 +108,25 @@ class Level:
             detect_world_bounds(self.walls, enemy, enemies=self.enemies)
 
     def draw(self):
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-        glEnable(GL_TEXTURE_2D)
-        glBindTexture(GL_TEXTURE_2D, self.texture_atlas.texture.id)
-        self.tilemap_batch.draw()
-        glDisable(GL_TEXTURE_2D)
-        glDisable(GL_BLEND)
+        with self.camera:
+            coords = self.set_camera_bounds()
+            self.camera.set(coords[0], coords[1])
+            glEnable(GL_BLEND)
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+            glEnable(GL_TEXTURE_2D)
+            glBindTexture(GL_TEXTURE_2D, self.texture_atlas.texture.id)
+            self.tilemap_batch.draw()
+            glDisable(GL_TEXTURE_2D)
+            glDisable(GL_BLEND)
+
+    def set_camera_bounds(self):
+        x = self.player.x - (SCREEN_WIDTH / 2)
+        y = self.player.y - (SCREEN_HEIGHT / 4)
+        if y < 0:
+            y = 0
+        if self.player.x <= (SCREEN_WIDTH / 2):
+            x = 0
+        if self.player.x >= (self.width - (SCREEN_WIDTH / 2)):
+            x = self.width - SCREEN_WIDTH
+
+        return x, y
