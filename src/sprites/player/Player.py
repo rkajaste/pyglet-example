@@ -11,7 +11,8 @@ class Player(pyglet.sprite.Sprite):
             targets,
             image=pyglet.resource.image('resources/player/player.png'),
             batch=None, 
-            group=None):
+            group=None,
+            user_interface=None):
         super(Player, self).__init__(x=x, y=y, img=image, batch=batch, group=group)
         self.batch = batch
         self.group = group
@@ -25,6 +26,7 @@ class Player(pyglet.sprite.Sprite):
         self.states = {
             'grounded': False
         }
+        self.user_interface = user_interface
         self.health = self.properties['max_health']
         self.targets = targets
         self.bullets = []
@@ -34,6 +36,7 @@ class Player(pyglet.sprite.Sprite):
         self.change_y = 0
         self.timer = 0
         self.old_x, self.old_y = self.x, self.y
+        self.user_interface.health_bar.populate(self.health)
 
     def update(self, dt):
         self.timer += 1
@@ -67,11 +70,6 @@ class Player(pyglet.sprite.Sprite):
         for bullet in self.bullets:
             bullet.update(dt)
 
-    def drawAll(self):
-        self.draw()
-        for bullet in self.bullets:
-            bullet.draw()
-
     def jump(self):
         if self.states['grounded']:
             self.change_y = self.properties['jumping_power']
@@ -96,6 +94,7 @@ class Player(pyglet.sprite.Sprite):
 
     def get_hit (self, damage):
         self.health -= damage
+        self.user_interface.health_bar.pop_blocks(damage)
 
     def die (self):
         self.respawn(100, 100)
@@ -106,4 +105,5 @@ class Player(pyglet.sprite.Sprite):
             self.health = self.properties['max_health']
         self.timer = 0
         self.last_gravity_check = 0
-        self.last_fire = 0   
+        self.last_fire = 0  
+        self.user_interface.health_bar.populate(self.health)

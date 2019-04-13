@@ -11,6 +11,7 @@ from src.physics import detect_platform_collision
 from src.physics import detect_world_bounds
 from src.physics import detect_blockers
 from src.Camera import Camera
+from src.ui.UserInterface import UserInterface
 from config import SCREEN_WIDTH
 from config import SCREEN_HEIGHT
 
@@ -25,14 +26,17 @@ class Level:
         self.blockers = self.tilemap.get_layer_by_name('blockers')
         self.tilemap_batch = pyglet.graphics.Batch()
         self.sprite_batch = pyglet.graphics.Batch()
+        self.ui_batch = pyglet.graphics.Batch()
         self.platform_layer = pyglet.graphics.OrderedGroup(0)
         self.sprite_layer = pyglet.graphics.OrderedGroup(1)
+        self.ui_group = pyglet.graphics.OrderedGroup(2)
         self.texture_atlas = pyglet.image.atlas.TextureAtlas(width=128, height=32)
         self.player = None
         self.enemies = []
         self.enemy_targets = []
-        self.load_map()
         self.camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.user_interface = UserInterface(self.ui_batch, self.ui_group)
+        self.load_map()
 
     def load_map(self):
         texture_gid_dict = {}
@@ -76,7 +80,8 @@ class Level:
                         obj.x, obj.y, 
                         targets=self.enemies, 
                         batch=self.tilemap_batch, 
-                        group=self.sprite_layer
+                        group=self.sprite_layer,
+                        user_interface=self.user_interface
                     )
                     self.enemy_targets.append(self.player)
                 elif obj.name == "enemy":
@@ -108,6 +113,7 @@ class Level:
             detect_world_bounds(self.walls, enemy, enemies=self.enemies)
 
     def draw(self):
+        self.ui_batch.draw()
         with self.camera:
             coords = self.set_camera_bounds()
             self.camera.set(coords[0], coords[1])

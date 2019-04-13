@@ -33,12 +33,6 @@ class Enemy(pyglet.sprite.Sprite):
             for obj in self.created_objects[key]:
                 obj.update(dt)
 
-    def drawAll(self):
-        self.draw()
-        for key in self.created_objects:
-            for obj in self.created_objects[key]:
-                obj.draw()
-
     def move(self):
         speed = self.properties['speed']
         self.x += speed * self.direction
