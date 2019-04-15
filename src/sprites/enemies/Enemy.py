@@ -17,15 +17,22 @@ class Enemy(pyglet.sprite.Sprite):
         'max_health': 3,
         'damage': 1
       }
+      self.change_y = 0
+      self.timer = 0
+      self.last_gravity_check = 0
       self.health = self.properties['max_health']
       self.created_objects = {}
       self.direction = -1
       self.old_x, self.old_y = self.x, self.y
 
     def update(self, dt):
+        self.timer += 1
         if self.states['is_patrolling']:
             self.move()
-        self.y = calculate_gravity(self.y)
+        if self.timer - self.last_gravity_check >= 5:
+            self.last_gravity_check = self.timer
+            self.change_y = calculate_gravity(self.change_y)
+        self.y += self.change_y
     
     def updateAll(self, dt):
         self.update(dt)

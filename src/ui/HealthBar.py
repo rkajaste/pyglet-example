@@ -1,13 +1,11 @@
-import pyglet
-from pyglet.gl import *
+#./src/ui/HealthBar.py
+from pyglet.gl import GL_QUADS
+from src.ui.InterfaceComponent import InterfaceComponent
 
-class HealthBar:
-    def __init__(self, x, y, batch, group):
-        self.x = x
-        self.y = y
-        self.batch = batch
-        self.group = group
-        self.blocks = []
+class HealthBar(InterfaceComponent):
+    def __init__(self, x, y, batch):
+        super(HealthBar, self).__init__(x, y, batch)
+        self.health_points = []
         self.offset = 30
         self.size = 20
 
@@ -23,19 +21,19 @@ class HealthBar:
                 left, bottom,
                 right, bottom
             ]
-            block = self.batch.add(4, GL_QUADS, self.group,
+            health_point = self.batch.add(4, GL_QUADS, None,
                                     ('v2f/static', vertex_positions),
-                                    ('c3f/dynamic', (
-                                                0, 1.0, 0,
-                                                1.0, 0, 0,
-                                                1.0, 0, 0,
-                                                0, 1.0, 0
-                                                )))
-            self.blocks.append(block)
+                                    ('c3B/static', (
+                                        0, 255, 0,
+                                        0, 255, 0,
+                                        0, 255, 0,
+                                        0, 255, 0
+                                    )))
+            self.health_points.append(health_point)
 
-    def pop_blocks(self, damage):
-        if damage > len(self.blocks):
-            damage = len(self.blocks) - 1
-        for i in range(damage):
-            self.blocks[len(self.blocks) - 1].delete()
-            self.blocks.pop()
+    def pop_health(self, damage):
+        if damage > len(self.health_points):
+            damage = len(self.health_points) - 1
+        for __ in range(damage):
+            self.health_points[len(self.health_points) - 1].delete()
+            self.health_points.pop()

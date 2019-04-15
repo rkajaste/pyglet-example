@@ -40,7 +40,8 @@ class Player(pyglet.sprite.Sprite):
 
     def update(self, dt):
         self.timer += 1
-        
+        if keys[key.UP]:
+            self.jump()
         if self.timer - self.last_gravity_check >= 5:
             self.last_gravity_check = self.timer
             self.change_y = calculate_gravity(self.change_y)
@@ -52,8 +53,6 @@ class Player(pyglet.sprite.Sprite):
             elif keys[key.RIGHT] and self.direction == -1:
                 self.direction *= -1
             self.move()
-        if keys[key.UP]:
-            self.jump()
         if (
             keys[key.SPACE] and not
             has_cooldown(
@@ -94,7 +93,7 @@ class Player(pyglet.sprite.Sprite):
 
     def get_hit (self, damage):
         self.health -= damage
-        self.user_interface.health_bar.pop_blocks(damage)
+        self.user_interface.health_bar.pop_health(damage)
 
     def die (self):
         self.respawn(100, 100)
@@ -103,7 +102,7 @@ class Player(pyglet.sprite.Sprite):
         self.x, self.y = x, y
         if self.health <= 0:
             self.health = self.properties['max_health']
+            self.user_interface.health_bar.populate(self.health)
         self.timer = 0
         self.last_gravity_check = 0
-        self.last_fire = 0  
-        self.user_interface.health_bar.populate(self.health)
+        self.last_fire = 0

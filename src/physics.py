@@ -11,7 +11,6 @@ def detect_platform_collision(platforms, sprite):
                 platform_left = round(platform.x)
                 platform_bottom = round(platform.y)
                 platform_right = round(platform.x + platform.width)
-                
                 if ('t' in blocked_sides and 
                     sprite.old_y >= platform_top):
                         sprite.y = platform_top
