@@ -20,4 +20,4 @@ python main.py
 
 # UML klassiskeem
 
-![UML klassiskeem](UML/UML.png?raw=true "UML klassiskeem")
+![UML klassiskeem](UML/UML_v3.png?raw=true "UML klassiskeem")
